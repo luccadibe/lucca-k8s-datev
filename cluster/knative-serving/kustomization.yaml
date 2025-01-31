@@ -1,3 +1,2 @@
 resources:
-  - serving-crds.yaml
   - serving-core.yaml
