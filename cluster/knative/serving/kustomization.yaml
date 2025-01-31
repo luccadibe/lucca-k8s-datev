@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
   - knative-serving.yaml
   - config-domain-patch.yaml
-  - ../operator # Ensure operator is installed first
 

@@ -11,7 +11,7 @@ spec:
       version: "1.17.0" 
       sourceRef:
         kind: HelmRepository
-        name: knative
+        name: knative-operator
         namespace: flux-system
   install:
     createNamespace: true
