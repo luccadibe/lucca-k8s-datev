@@ -9,5 +9,5 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: k8s-datev
+    name: lucca-k8s-datev
   validation: client
