@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: rabbitmq-servicemonitor
+  labels:
+    app: rabbitmq
+spec:
+  selector:
+    matchLabels:
+      app: invoice-queue # for now the name of the rabbitmq service
+  endpoints:
+    - port: "15692"
+      interval: 5s
+  namespaceSelector:
+    matchNames:
+      - default

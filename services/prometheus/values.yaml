@@ -1,0 +1,68 @@
+# Basic settings for kube-state-metrics
+kube-state-metrics:
+  metricLabelsAllowlist:
+    - pods=[*]
+    - deployments=[app.kubernetes.io/name,app.kubernetes.io/component,app.kubernetes.io/instance]
+
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+
+  # Additional scrape configs for RabbitMQ
+  additionalServiceMonitors:
+    - name: rabbitmq-servicemonitor
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: invoice-queue
+          app.kubernetes.io/component: rabbitmq
+      namespaceSelector:
+        matchNames:
+          - default
+      endpoints:
+        - port: prometheus
+          interval: 2s
+          path: /metrics
+    - name: minio-servicemonitor
+      selector:
+        matchLabels:
+          app: minio
+      namespaceSelector:
+        matchNames:
+          - default
+      endpoints:
+        - port: metrics
+          path: /minio/v2/metrics/cluster
+          interval: 5s
+    - name: knative-function-metrics
+      selector:
+        matchLabels:
+          "function.knative.dev": "true"
+      endpoints:
+        - port: http-metrics
+          path: /metrics
+          interval: 2s
+
+  additionalPodMonitors:
+    - name: rabbitmq-podmonitor
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: rabbitmq
+      namespaceSelector:
+        matchNames:
+          - default
+      podMetricsEndpoints:
+        - port: prometheus
+          interval: 2s
+          path: /metrics
+  additionalScrapeConfigs:
+    - job_name: minio
+      static_configs:
+        - targets: ["minio-service.minio.svc.cluster.local:9000"]
+      metrics_path: /minio/v2/metrics/cluster
+      scheme: http
+    - job_name: knative-function-metrics
+      static_configs:
+        - targets: ["observe-me.default.svc.cluster.local:8080"]
+      metrics_path: /metrics
+      scheme: http

@@ -1,0 +1,3 @@
+resources:
+  - eventing-crds.yaml
+  - eventing-core.yaml

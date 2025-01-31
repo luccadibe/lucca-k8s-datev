@@ -1,0 +1,4 @@
+resources:
+  - knative-serving/
+  - knative-eventing/
+  - kourier/

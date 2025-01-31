@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: invoice-queue-server-0
+  labels:
+    app: rabbitmq
+spec:
+  selector:
+    matchLabels:
+      app: invoice-queue
+  podMetricsEndpoints:
+    - port: "15692"

@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: knative-function-metrics
+spec:
+  selector:
+    matchLabels:
+      "function.knative.dev": "true"
+  endpoints:
+    - port: http-metrics
+      path: /metrics
+      interval: 15s

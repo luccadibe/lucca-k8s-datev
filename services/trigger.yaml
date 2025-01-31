@@ -1,0 +1,56 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  annotations:
+    eventing.knative.dev/creator: kubernetes-admin
+    eventing.knative.dev/lastModifier: kubernetes-admin
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"eventing.knative.dev/v1","kind":"Trigger","metadata":{"annotations":{},"name":"invoice-trigger","namespace":"default"},"spec":{"broker":"default","filter":{"attributes":{"type":"invoice"}},"subscriber":{"ref":{"apiVersion":"serving.knative.dev/v1","kind":"Service","name":"generate-invoice"}}}}
+  creationTimestamp: "2024-10-18T15:08:25Z"
+  generation: 1
+  labels:
+    eventing.knative.dev/broker: default
+  name: invoice-trigger
+  namespace: default
+  resourceVersion: "27378563"
+  uid: 2b4af42b-3bdc-4462-8426-810851426859
+spec:
+  broker: default
+  filter:
+    attributes:
+      type: invoice
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: generate-invoice
+      namespace: default
+status:
+  conditions:
+  - lastTransitionTime: "2024-10-18T19:20:01Z"
+    message: Broker "default" does not exist
+    reason: BrokerDoesNotExist
+    status: "False"
+    type: BrokerReady
+  - lastTransitionTime: "2024-10-18T19:20:01Z"
+    status: Unknown
+    type: DeadLetterSinkResolved
+  - lastTransitionTime: "2024-10-18T19:20:01Z"
+    status: Unknown
+    type: DependencyReady
+  - lastTransitionTime: "2024-10-18T19:20:01Z"
+    reason: authentication-oidc feature not yet supported for this Broker class
+    status: "True"
+    type: OIDCIdentityCreated
+  - lastTransitionTime: "2024-10-18T19:20:01Z"
+    message: Broker "default" does not exist
+    reason: BrokerDoesNotExist
+    status: "False"
+    type: Ready
+  - lastTransitionTime: "2024-10-18T19:20:01Z"
+    status: Unknown
+    type: SubscriberResolved
+  - lastTransitionTime: "2024-10-18T19:20:01Z"
+    status: Unknown
+    type: SubscriptionReady
+  observedGeneration: 1

@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: k6s-workload-generator
+spec:
+  template:
+    spec:
+      containers:
+      - name: k6s
+        image: grafana/k6:latest
+        args: 
+        - run
+        - --vus
+        - "$(VUS)"
+        - --duration
+        - "$(DURATION)"
+        - --rps
+        - "$(RPS)"
+        - /scripts/script.js
+        env:
+        - name: RABBIT_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secrets
+              key: endpoint
+        - name: RABBIT_USER
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secrets
+              key: username
+        - name: RABBIT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secrets
+              key: password
+        - name: QUEUE_NAME
+          value: "my_new_queue"
+        - name: VUS
+          value: "10"
+        - name: DURATION
+          value: "5m"
+        - name: RPS
+          value: "100"
+        volumeMounts:
+        - name: k6s-script
+          mountPath: /scripts
+      volumes:
+      - name: k6s-script
+        configMap:
+          name: k6s-script
+      restartPolicy: Never
+  backoffLimit: 4
