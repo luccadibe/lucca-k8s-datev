@@ -1,5 +1,3 @@
 resources:
-  - knative-serving/
-  - knative-eventing/
-  - kourier-system/
+  - knative/
   - kube-system/
