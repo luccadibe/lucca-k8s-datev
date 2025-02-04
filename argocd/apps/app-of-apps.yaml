@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@github.com:luccadibe/lucca-k8s-datev.git
+    repoURL: https://github.com/luccadibe/lucca-k8s-datev.git
     targetRevision: argo
     path: argocd/apps
   destination:
